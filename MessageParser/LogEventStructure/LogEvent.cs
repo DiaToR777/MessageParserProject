@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MessageParser.LogEventStructure;
+namespace LogEventBuilder.LogEventStructure;
 
 public class LogEvent
 {

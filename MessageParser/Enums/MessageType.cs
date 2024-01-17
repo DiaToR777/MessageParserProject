@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MessageParser.Enums;
+namespace LogEventBuilder.Enums;
 
 public enum MessageType
 {

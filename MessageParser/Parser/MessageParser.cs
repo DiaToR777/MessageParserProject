@@ -1,4 +1,4 @@
-﻿using MessageParser.Enums;
+﻿using LogEventBuilder.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace MessageParser.MessageParser;
+namespace Parser.MessageParser;
 
-public class MessageParser_
+public class MessageParser
 {
     public string MainMessageParser(string logMessage)
     {

@@ -1,2 +1,2 @@
-﻿using MessageParser.LogEventStructure;
+﻿using LogEventBuilder.LogEventStructure;
 
