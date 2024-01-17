@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MessageParser.MessageParser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -10,6 +11,7 @@ namespace MessageParser.LogEventStructure;
 public class LogEventBuilder
 {
     private const string DATEFORMAT = "yyyy-MM-dd HH:mm:ss:ffff";
+    MessageParser_ parser = new();
     public LogEvent GetLogEvent(string log)
     {
         var logParts = log.Split("|");
@@ -33,14 +35,11 @@ public class LogEventBuilder
         return stringDate;
 
     }
-    public string MessageParse(string logMessage, int ipAdress)
+
+    public string MessageParse(string logMessage)
     {
         var message = logMessage.Trim();
 
-        var currentMessage = message.ToString();
-
-        if ()
-
-
+        return parser.MainMessageParser(message);
     }
 }

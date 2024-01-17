@@ -14,5 +14,6 @@ public enum MessageType
     BanIp,
     UnBanIp,
     FirewallEntrUpd,
-    UpdatingFirewall
+    UpdatingFirewall,
+    None
 }

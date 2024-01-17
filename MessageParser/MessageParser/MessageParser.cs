@@ -14,33 +14,33 @@ public class MessageParser
     private string MessageParser_(string logMessage, MessageType messageType)
     {
         string message_;
-        
+
         switch (messageType)
         {
             case MessageType.SuccedLogin:
-                  message_ = SuccedLoginParser(logMessage);
+                message_ = SuccedLoginParser(logMessage);
                 break;
 
-                case MessageType.FailureLogin:
-                 message_ = FailureLoginParser(logMessage);
+            case MessageType.FailureLogin:
+                message_ = FailureLoginParser(logMessage);
                 break;
 
             case MessageType.ForgettingFeiledLogin:
-                 message_ = ForgetFeiledLoginParser(logMessage);
+                message_ = ForgetFeiledLoginParser(logMessage);
                 break;
-                
+
             case MessageType.BanIp:
                 message_ = BanIPParser(logMessage);
                 break;
-                    
+
             case MessageType.UnBanIp:
                 message_ = UnBanIPParser(logMessage);
                 break;
 
             case MessageType.FirewallEntrUpd:
-               message_ = FirewalEntrlUpdateParser(logMessage);
+                message_ = FirewalEntrlUpdateParser(logMessage);
                 break;
-                
+
             case MessageType.UpdatingFirewall:
                 message_ = FirewallUpdatedParser(logMessage);
                 break;
@@ -124,9 +124,22 @@ public class MessageParser
 
     static string GetMatchValue(string input, string pattern)
     {
-        Match match = Regex.Match(input, pattern);   
+        Match match = Regex.Match(input, pattern);
         return match.Groups[1].Value;
     }
+
+    public MessageType messageType(string logMessanger)
+    {
+        if (logMessanger.Contains("Login succeeded", StringComparison.OrdinalIgnoreCase))
+            return messageType.SuccedLogin;
+
+
+
+
+
+    }
+
+
 
 
 }
