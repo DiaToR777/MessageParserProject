@@ -11,34 +11,45 @@ namespace MessageParser.MessageParser;
 
 public class MessageParser
 {
-    private string MessageParser(string logMessage, MessageType messageType)
+    private string MessageParser_(string logMessage, MessageType messageType)
     {
+        string message_;
+        
         switch (messageType)
         {
             case MessageType.SuccedLogin:
-                SuccedLoginParser(logMessage);
+                  message_ = SuccedLoginParser(logMessage);
                 break;
-            case MessageType.FailureLogin:
-                FailureLoginParser(logMessage);
+
+                case MessageType.FailureLogin:
+                 message_ = FailureLoginParser(logMessage);
                 break;
+
             case MessageType.ForgettingFeiledLogin:
-                ForgetFeiledLoginParser(logMessage);
+                 message_ = ForgetFeiledLoginParser(logMessage);
                 break;
+                
             case MessageType.BanIp:
-                BanIPParser(logMessage);
+                message_ = BanIPParser(logMessage);
                 break;
+                    
             case MessageType.UnBanIp:
-                UnBanIPParser(logMessage);
+                message_ = UnBanIPParser(logMessage);
                 break;
+
             case MessageType.FirewallEntrUpd:
-                FirewalEntrlUpdateParser(logMessage);
+               message_ = FirewalEntrlUpdateParser(logMessage);
                 break;
+                
             case MessageType.UpdatingFirewall:
-                FirewallUpdatedParser(logMessage);
+                message_ = FirewallUpdatedParser(logMessage);
                 break;
+
             default:
+                message_ = "N/a";
                 break;
         }
+        return message_;
     }
 
     private string FailureLoginParser(string logMessager)
@@ -50,62 +61,62 @@ public class MessageParser
         var message = $"Невдала спроба входу: {adress}";
         return message;
     }
-    private string SuccedLoginParser(string logMessager)
+    private string SuccedLoginParser(string message)
     {
         var addressPattern = @"(\d+\.\d+\.\d+\.\d+)";
         var userNamePattern = @"user name: (\w+)";
 
-        string address = GetMatchValue(logMessager, addressPattern);
-        string userName = GetMatchValue(logMessager, userNamePattern);
+        string address = GetMatchValue(message, addressPattern);
+        string userName = GetMatchValue(message, userNamePattern);
 
         var result = $"Успішний вхід за IP адресою: {address}, Ім'я користувача: {userName}";
         return result;
     }
-    private string ForgetFeiledLoginParser(string logMessager)
+    private string ForgetFeiledLoginParser(string message)
     {
         var adressPattern = @"ip address (\d+\.\d+\.\d+\.\d+)";
 
-        var adress = GetMatchValue(logMessager, adressPattern);
+        var adress = GetMatchValue(message, adressPattern);
 
         var result = $"Забуто невдалу спробу входу: {adress}";
         return result;
     }
-    private string BanIPParser(string logMessager)
+    private string BanIPParser(string message)
     {
         var adressPattern = @"(\d+\.\d+\.\d+\.\d+)";
         var loginAttemptsPattern = @"count: (\d+)";
         var durationPattern = @"duration: ([\d:]+)";
 
-        var adress = GetMatchValue(logMessager, adressPattern);
-        var loginAttempts = GetMatchValue(logMessager, loginAttemptsPattern);
-        var duration = GetMatchValue(logMessager, durationPattern);
+        var adress = GetMatchValue(message, adressPattern);
+        var loginAttempts = GetMatchValue(message, loginAttemptsPattern);
+        var duration = GetMatchValue(message, durationPattern);
 
         var result = $"Заблоковано IP адресу: {adress}, Спроб входу: {loginAttempts}, Час блокування: {duration}";
         return result;
     }
-    private string UnBanIPParser(string logMessanger)
+    private string UnBanIPParser(string message)
     {
         var addressPattern = @"(\d+\.\d+\.\d+\.\d+)";
 
-        string address = GetMatchValue(logMessanger, addressPattern);
+        string address = GetMatchValue(message, addressPattern);
 
         var result = $"Розблоковано IР адресу: {address}";
         return result;
     }
-    private string FirewalEntrlUpdateParser(string logMessanger)
+    private string FirewalEntrlUpdateParser(string message)
     {
         var adressesPattern = @"(.+)";
 
-        string adresses = GetMatchValue(logMessanger, adressesPattern);
+        string adresses = GetMatchValue(message, adressesPattern);
 
         var result = $"Оновлені записи брандмауера: {adresses}";
         return result;
     }
-    private string FirewallUpdatedParser(string logMessanger)
+    private string FirewallUpdatedParser(string message)
     {
         var attemptsPattern = @"(\d+)";
 
-        string attempts = GetMatchValue(logMessanger, attemptsPattern);
+        string attempts = GetMatchValue(message, attemptsPattern);
 
         var result = $"Оновлення брандмауера з {attempts} записами...";
         return result;
@@ -113,8 +124,7 @@ public class MessageParser
 
     static string GetMatchValue(string input, string pattern)
     {
-        Match match = Regex.Match(input, pattern);
-       
+        Match match = Regex.Match(input, pattern);   
         return match.Groups[1].Value;
     }
 
