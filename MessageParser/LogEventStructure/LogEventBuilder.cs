@@ -36,9 +36,11 @@ public class LogEventBuilder
     }
 
     public string MessageParse(string logMessage)
-    {
-        var message = logMessage.Trim();
+     {
+          var message = logMessage.Trim();
+          return parser.MainMessageParser(message);
 
-        return parser.MainMessageParser(message);
+          logMessage = logMessage.Trim();
+          return parser.MainMessageParser(logMessage);
     }
 }

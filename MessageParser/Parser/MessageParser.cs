@@ -100,7 +100,7 @@ public class MessageParser
 
         string address = GetMatchValue(message, addressPattern);
 
-        var result = $"Розблоковано IР адресу: {address}";
+        var result = $"Розблоковано IP адресу: {address}";
         return result;
     }
     private string FirewalEntrlUpdateParser(string message)
