@@ -3,16 +3,18 @@
  string ipAdressPattern = @"(\d+\.\d+\.\d+\.\d+)";
                           
 
-string logMessager = "Login failure: 149.50.98.117, , RDP, 2, 14";
+string logMessager = "Firewall entries updated: 193.34.213.119,195.3.221.194";
 
 
-Console.WriteLine(LoginFailureParser(logMessager));
-string LoginFailureParser(string logMessager)
+Console.WriteLine(FirewalEntrlUpdateParser(logMessager));
+ string FirewalEntrlUpdateParser(string message)
 {
-    string addressPattern = @"(\d+\.\d+\.\d+\.\d+)";
-    string ipAdress = GetMatchValue(logMessager, addressPattern);
-    var message = $"Невдала спроба входу: {ipAdress}";
-    return message;
+    var adressesPattern = @"(.+)";
+
+    string adresses = GetMatchValue(message, adressesPattern);
+
+    var result = $"Оновлені записи брандмауера: {adresses}";
+    return result;
 }
 static string GetMatchValue(string input, string pattern)
 {

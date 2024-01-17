@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace MessageParser.MessageParser;
 
-public class MessageParser
+public class MessageParser_
 {
-    private string MessageParser_(string logMessage, MessageType messageType)
+    public string MainMessageParser(string logMessage)
     {
         string message_;
 
-        switch (messageType)
+        switch (EnumParser(logMessage))
         {
             case MessageType.SuccedLogin:
                 message_ = SuccedLoginParser(logMessage);
@@ -128,15 +128,31 @@ public class MessageParser
         return match.Groups[1].Value;
     }
 
-    public MessageType messageType(string logMessanger)
+    private MessageType EnumParser(string logMessanger)
     {
-        if (logMessanger.Contains("Login succeeded", StringComparison.OrdinalIgnoreCase))
-            return messageType.SuccedLogin;
+        if (logMessanger.Contains("Login succeeded"))
+            return MessageType.SuccedLogin;
 
+        else if (logMessanger.Contains("Login failure:"))
+            return MessageType.FailureLogin;
 
+        else if (logMessanger.Contains("Forgetting failed login"))
+            return MessageType.ForgettingFeiledLogin;
 
+        else if (logMessanger.Contains("Banning ip"))
+            return MessageType.BanIp;
 
+        else if (logMessanger.Contains("Un-banning ip"))
+            return MessageType.UnBanIp;
 
+        else if (logMessanger.Contains("Firewall entries updated"))
+            return MessageType.FirewallEntrUpd;
+
+        else if (logMessanger.Contains("Updating firewall"))
+            return MessageType.UpdatingFirewall;
+
+        else
+            return MessageType.None;
     }
 
 
