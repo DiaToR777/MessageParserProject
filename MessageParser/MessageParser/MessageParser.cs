@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MessageParser.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,12 +11,37 @@ namespace MessageParser.MessageParser;
 
 public class MessageParser
 {
-    //private string MessageParser(string logMessage)
-    //{
-       
-    //}
+    private string MessageParser(string logMessage, MessageType messageType)
+    {
+        switch (messageType)
+        {
+            case MessageType.SuccedLogin:
+                SuccedLoginParser(logMessage);
+                break;
+            case MessageType.FailureLogin:
+                FailureLoginParser(logMessage);
+                break;
+            case MessageType.ForgettingFeiledLogin:
+                ForgetFeiledLoginParser(logMessage);
+                break;
+            case MessageType.BanIp:
+                BanIPParser(logMessage);
+                break;
+            case MessageType.UnBanIp:
+                UnBanIPParser(logMessage);
+                break;
+            case MessageType.FirewallEntrUpd:
+                FirewalEntrlUpdateParser(logMessage);
+                break;
+            case MessageType.UpdatingFirewall:
+                FirewallUpdatedParser(logMessage);
+                break;
+            default:
+                break;
+        }
+    }
 
-    private string LoginFailureParser(string logMessager)
+    private string FailureLoginParser(string logMessager)
     {
         var addressPattern = @"(\d+\.\d+\.\d+\.\d+)";
 
@@ -75,7 +101,7 @@ public class MessageParser
         var result = $"Оновлені записи брандмауера: {adresses}";
         return result;
     }
-    private string FirewallUpdaredParser(string logMessanger)
+    private string FirewallUpdatedParser(string logMessanger)
     {
         var attemptsPattern = @"(\d+)";
 

@@ -9,10 +9,6 @@ namespace MessageParser.Enums;
 public class ResultString
 {
 
-    public string ResultString(PossibleStrngs strngs, int ipAdress, string userName, int loginAttempts, int firewallEntries)
-    {
-      
-
-    }
+    
 
 }
