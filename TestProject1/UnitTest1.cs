@@ -1,4 +1,4 @@
-using MessageParser.MessageParser;
+using Parser.MessageParser;
 
 namespace TestProject1
 {
@@ -24,7 +24,7 @@ namespace TestProject1
                "Оновлені записи брандмауера: 193.34.213.119,195.3.221.194",
                "Оновлення брандмауера з 2 записами..." };
 
-          MessageParser_ parser = new();
+          MessageParser parser = new();
 
           [TestMethod]
           public void TestLoginsucceeded()
