@@ -52,16 +52,20 @@ public class MessageParser
         return message_;
     }
 
-    private string FailureLoginParser(string logMessager)
+    private static string FailureLoginParser(string logMessager)
     {
         var addressPattern = @"(\d+\.\d+\.\d+\.\d+)";
+        var userNamePattern = @",([^,]+),";
 
         string adress = GetMatchValue(logMessager, addressPattern);
 
-        var message = $"Невдала спроба входу: {adress}";
+       
+        string userName = GetMatchValue(logMessager, userNamePattern);
+        
+        var message = $"Невдала спроба входу: {adress}, імя користувача: {userName}";
         return message;
     }
-    private string SuccedLoginParser(string message)
+    private static string SuccedLoginParser(string message)
     {
         var addressPattern = @"(\d+\.\d+\.\d+\.\d+)";
         var userNamePattern = @"user name: (\w+)";
@@ -72,7 +76,7 @@ public class MessageParser
         var result = $"Успішний вхід за IP адресою: {address}, Ім'я користувача: {userName}";
         return result;
     }
-    private string ForgetFeiledLoginParser(string message)
+    private static string ForgetFeiledLoginParser(string message)
     {
         var adressPattern = @"ip address (\d+\.\d+\.\d+\.\d+)";
 
@@ -81,7 +85,7 @@ public class MessageParser
         var result = $"Забуто невдалу спробу входу: {adress}";
         return result;
     }
-    private string BanIPParser(string message)
+    private static string BanIPParser(string message)
     {
         var adressPattern = @"(\d+\.\d+\.\d+\.\d+)";
         var loginAttemptsPattern = @"count: (\d+)";
@@ -103,16 +107,16 @@ public class MessageParser
         var result = $"Розблоковано IP адресу: {address}";
         return result;
     }
-    private string FirewalEntrlUpdateParser(string message)
+    private static string FirewalEntrlUpdateParser(string message)
     {
-        var adressesPattern = @"(.+)";
+        var adressesPattern = @"Firewall entries updated: (.+)";
 
         string adresses = GetMatchValue(message, adressesPattern);
 
         var result = $"Оновлені записи брандмауера: {adresses}";
         return result;
     }
-    private string FirewallUpdatedParser(string message)
+    private static string FirewallUpdatedParser(string message)
     {
         var attemptsPattern = @"(\d+)";
 
@@ -128,31 +132,54 @@ public class MessageParser
         return match.Groups[1].Value;
     }
 
-    private MessageType EnumParser(string logMessanger)
+    //private MessageType EnumParser(string logMessanger)
+    //{
+    //    if (logMessanger.Contains("Login succeeded"))
+    //        return MessageType.SuccedLogin;
+
+    //    else if (logMessanger.Contains("Login failure:"))
+    //        return MessageType.FailureLogin;
+
+    //    else if (logMessanger.Contains("Forgetting failed login"))
+    //        return MessageType.ForgettingFeiledLogin;
+
+    //    else if (logMessanger.Contains("Banning ip"))
+    //        return MessageType.BanIp;
+
+    //    else if (logMessanger.Contains("Un-banning ip"))
+    //        return MessageType.UnBanIp;
+
+    //    else if (logMessanger.Contains("Firewall entries updated"))
+    //        return MessageType.FirewallEntrUpd;
+
+    //    else if (logMessanger.Contains("Updating firewall"))
+    //        return MessageType.UpdatingFirewall;
+
+    //    else
+    //        return MessageType.None;
+    //} було
+
+    private static MessageType EnumParser(string logMessanger)
     {
-        if (logMessanger.Contains("Login succeeded"))
-            return MessageType.SuccedLogin;
-
-        else if (logMessanger.Contains("Login failure:"))
-            return MessageType.FailureLogin;
-
-        else if (logMessanger.Contains("Forgetting failed login"))
-            return MessageType.ForgettingFeiledLogin;
-
-        else if (logMessanger.Contains("Banning ip"))
-            return MessageType.BanIp;
-
-        else if (logMessanger.Contains("Un-banning ip"))
-            return MessageType.UnBanIp;
-
-        else if (logMessanger.Contains("Firewall entries updated"))
-            return MessageType.FirewallEntrUpd;
-
-        else if (logMessanger.Contains("Updating firewall"))
-            return MessageType.UpdatingFirewall;
-
-        else
-            return MessageType.None;
+        switch (logMessanger)
+        {
+            case string s when s.Contains("Login succeeded"):
+                return MessageType.SuccedLogin;
+            case string s when s.Contains("Login failure:"):
+                return MessageType.FailureLogin;
+            case string s when s.Contains("Forgetting failed login"):
+                return MessageType.ForgettingFeiledLogin;
+            case string s when s.Contains("Banning ip"):
+                return MessageType.BanIp;
+            case string s when s.Contains("Un-banning"):
+                return MessageType.UnBanIp;
+            case string s when s.Contains("Firewall entries updated"):
+                return MessageType.FirewallEntrUpd;
+            case string s when s.Contains("Updating firewall"):
+                return MessageType.UpdatingFirewall;
+            default:
+                return MessageType.None;
+        }
     }
 
 

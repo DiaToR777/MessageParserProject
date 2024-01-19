@@ -10,10 +10,10 @@ public class LogEvent
 {
 
     public int Id { get; }
-    public string Date { get; }
+    public DateTime Date { get; }
     public string Messsage { get; }
 
-    public LogEvent(int id, string date, string messsage)
+    public LogEvent(int id, DateTime date, string messsage)
     {
         Id = id;
         Date = date;

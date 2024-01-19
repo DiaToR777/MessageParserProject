@@ -12,7 +12,7 @@ namespace LogEventStructur.LogEventBuilder;
 public class LogEventBuilder
 {
     private const string DATEFORMAT = "yyyy-MM-dd HH:mm:ss:ffff";
-    MessageParser parser = new();
+    readonly MessageParser parser = new();
     public LogEvent GetLogEvent(string log)
     {
         var logParts = log.Split("|");
@@ -20,26 +20,27 @@ public class LogEventBuilder
         var logDate = logParts[0];
         var logMessage = logParts[3];
 
-        var date = DateParse(logDate);
+        DateTime date = DateParse(logDate);
         var message = MessageParse(logMessage);
         var id = 1;
-        LogEvent logEvent = new(id, message, date);
+        LogEvent logEvent = new(id, date, message);
         return logEvent;
     }
 
-    private string DateParse(string logDate)
+    private static DateTime DateParse(string logDate)
     {
-        var dateTime = logDate.Trim();
-        DateTime result = DateTime.ParseExact(dateTime, DATEFORMAT, null);
-        var stringDate = result.ToString();
-        return stringDate;
+        //var dateTime = logDate.Trim();
+        //DateTime result = DateTime.ParseExact(dateTime, DATEFORMAT, null);
+        //var stringDate = result.ToString();
+        //return stringDate; Було
+
+
+        return DateTime.ParseExact(logDate.Trim(), DATEFORMAT, null);   //стало
     }
 
     public string MessageParse(string logMessage)
      {
-          var message = logMessage.Trim();
-          return parser.MainMessageParser(message);
-
+        Console.OutputEncoding = Encoding.Unicode;
           logMessage = logMessage.Trim();
           return parser.MainMessageParser(logMessage);
     }

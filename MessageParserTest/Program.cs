@@ -1,19 +1,18 @@
 ﻿using System.Text.RegularExpressions;
 
  string ipAdressPattern = @"(\d+\.\d+\.\d+\.\d+)";
-                          
-
-string logMessager = "Firewall entries updated: 193.34.213.119,195.3.221.194";
 
 
-Console.WriteLine(FirewalEntrlUpdateParser(logMessager));
- string FirewalEntrlUpdateParser(string message)
+string logMessager = "Un-banning ip address 193.34.213.119, ban expired";
+                                                
+Console.WriteLine(UnBanIPParser(logMessager));
+ string UnBanIPParser(string message)
 {
-    var adressesPattern = @"(.+)";
+    var addressPattern = @"(\d+\.\d+\.\d+\.\d+)";
 
-    string adresses = GetMatchValue(message, adressesPattern);
+    string address = GetMatchValue(message, addressPattern);
 
-    var result = $"Оновлені записи брандмауера: {adresses}";
+    var result = $"Розблоковано IP адресу: {address}";
     return result;
 }
 static string GetMatchValue(string input, string pattern)
